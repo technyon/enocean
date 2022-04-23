@@ -1,0 +1,3 @@
+[submodule "lib/enocean_PTM215b"]
+	path = lib/enocean_PTM215b
+	url = https://github.com/technyon/enocean_PTM215b.git
