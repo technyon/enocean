@@ -22,10 +22,18 @@ file(GLOB_RECURSE SRCFILESREC
         lib/NimBLE-Arduino/src/*.h
 )
 
+
 add_executable(${PROJECT_NAME}
         main.cpp
         ${SRCFILES}
         ${SRCFILESREC}
+)
+
+target_compile_definitions(${PROJECT_NAME}
+        PRIVATE
+        ARDUHAL_LOG_LEVEL=ARDUHAL_LOG_LEVEL_DEBUG
+        CORE_DEBUG_LEVEL=ARDUHAL_LOG_LEVEL_DEBUG
+        CONFIG_NIMBLE_CPP_LOG_LEVEL=0
 )
 
 #target_link_esp32_sdk(${PROJECT_NAME})

@@ -1,7 +1,7 @@
 /**
  * A BLE client example to receive events from an Enocean PTM215b switch
- * 
- * 
+ *
+ *
  * author Jeroen
  */
 
@@ -37,9 +37,7 @@ public:
 
         std::string direction = (evt.button == PTM215b::Button::A_UP || evt.button == PTM215b::Button::B_UP) ? "Up" : "Down";
 
-        Serial.print("BleSwitchEvent Received: Node Id: "); Serial.print(evt.nodeId);
-        Serial.print(", Type: "); Serial.print(type.c_str());
-        Serial.print(", Direction: "); Serial.println(direction.c_str());
+        log_d("BleSwitchEvent Received: Node Id: %d, Type: %s, Direction: %s", evt.nodeId, type.c_str(), direction.c_str());
     };
 
 };
@@ -50,6 +48,9 @@ PTM215b::Enocean_PTM215b enocean_PTM215b(handler, true);
 void setup(){
     delay(1100);
     Serial.begin(115200);
+    Serial.setDebugOutput(true);
+    esp_log_level_set("*", ESP_LOG_VERBOSE);
+
     Serial.println(F("Starting Enocean_PTM215b BLE Example application..."));
 
     BLEDevice::init("ESP32_client");
@@ -60,4 +61,4 @@ void setup(){
 
 void loop(){
     delay(1000);
-} 
+}
