@@ -46,12 +46,7 @@ EH handler;
 PTM215b::Enocean_PTM215b enocean_PTM215b(handler, true);
 
 void setup(){
-    delay(1100);
     Serial.begin(115200);
-    Serial.setDebugOutput(true);
-    esp_log_level_set("*", ESP_LOG_VERBOSE);
-
-    Serial.println(F("Starting Enocean_PTM215b BLE Example application..."));
 
     BLEDevice::init("ESP32_client");
     enocean_PTM215b.initialize();
