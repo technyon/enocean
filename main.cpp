@@ -5,7 +5,7 @@
  * author Jeroen
  */
 #include "EnOceanBLEScannerSubscriber.h"
-#include "BLEScanner/BleScanner.h"
+#include "BleScanner.h"
 
 #define BLE_ADDRESS "e2:15:00:01:6b:89"
 #define SECURITY_KEY "C18D85427E74FB9A7CF46C29A760E8C5"

@@ -16,6 +16,7 @@ include_directories(${PROJECT_NAME}
         PRIVATE
         lib/NimBLE-Arduino/src
         lib/EnOceanBleDevices/src
+        lib/BleScanner/src
 )
 
 file(GLOB SRCFILES
@@ -27,8 +28,8 @@ file(GLOB SRCFILES
         lib/EnOceanBleDevices/src/MultiData/EnOceanDataEventHandler.cpp
         lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventAdapter.cpp
         lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventHandler.cpp
-        lib/EnOceanBleDevices/src/BLEScanner/BleInterfaces.h
-        lib/EnOceanBleDevices/src/BLEScanner/BleScanner.cpp
+        lib/BleScanner/src/BleInterfaces.h
+        lib/BleScanner/src/BleScanner.cpp
 )
 
 file(GLOB_RECURSE SRCFILESREC
