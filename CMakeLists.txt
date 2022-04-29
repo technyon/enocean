@@ -19,7 +19,7 @@ include_directories(${PROJECT_NAME}
 )
 
 file(GLOB SRCFILES
-        lib/EnOceanBleDevices/src/EnOceanBLEScanner.cpp
+        lib/EnOceanBleDevices/src/EnOceanBLEScannerSubscriber.cpp
         lib/EnOceanBleDevices/src/EnOceanConstants.h
         lib/EnOceanBleDevices/src/EnOceanDataTypes.h
         lib/EnOceanBleDevices/src/EnOceanUtils.cpp
@@ -27,6 +27,8 @@ file(GLOB SRCFILES
         lib/EnOceanBleDevices/src/MultiData/EnOceanDataEventHandler.cpp
         lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventAdapter.cpp
         lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventHandler.cpp
+        lib/EnOceanBleDevices/src/BLEScanner/BleInterfaces.h
+        lib/EnOceanBleDevices/src/BLEScanner/BleScanner.cpp
 )
 
 file(GLOB_RECURSE SRCFILESREC
