@@ -1,0 +1,3 @@
+[submodule "lib/EnOceanBleDevices"]
+	path = lib/EnOceanBleDevices
+	url = git@github.com:technyon/EnOceanBleDevices.git

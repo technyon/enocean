@@ -1,19 +1,32 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 set(ARDUINO_BOARD "ESP32 Dev Module [esp32.esp32]")
+set(LOG_LEVEL ARDUHAL_LOG_LEVEL_INFO)
+
+# ARDUHAL_LOG_LEVEL_NONE
+# ARDUHAL_LOG_LEVEL_ERROR
+# ARDUHAL_LOG_LEVEL_WARN
+# ARDUHAL_LOG_LEVEL_INFO
+# ARDUHAL_LOG_LEVEL_DEBUG
+# ARDUHAL_LOG_LEVEL_VERBOSE
 
 project(enocean CXX)
 
 include_directories(${PROJECT_NAME}
         PRIVATE
         lib/NimBLE-Arduino/src
-        lib/enocean_PTM215b/src
+        lib/EnOceanBleDevices/src
 )
 
 file(GLOB SRCFILES
-    lib/enocean_PTM215b/src/enocean_Constants.h
-    lib/enocean_PTM215b/src/enocean_PTM215b.cpp
-    lib/enocean_PTM215b/src/enocean_utils.h
+        lib/EnOceanBleDevices/src/EnOceanBLEScanner.cpp
+        lib/EnOceanBleDevices/src/EnOceanConstants.h
+        lib/EnOceanBleDevices/src/EnOceanDataTypes.h
+        lib/EnOceanBleDevices/src/EnOceanUtils.cpp
+        lib/EnOceanBleDevices/src/MultiData/EnOceanDataEventAdapter.cpp
+        lib/EnOceanBleDevices/src/MultiData/EnOceanDataEventHandler.cpp
+        lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventAdapter.cpp
+        lib/EnOceanBleDevices/src/PTM215/EnOceanPTM215EventHandler.cpp
 )
 
 file(GLOB_RECURSE SRCFILESREC
@@ -31,8 +44,8 @@ add_executable(${PROJECT_NAME}
 
 target_compile_definitions(${PROJECT_NAME}
         PRIVATE
-        ARDUHAL_LOG_LEVEL=ARDUHAL_LOG_LEVEL_DEBUG
-        CORE_DEBUG_LEVEL=ARDUHAL_LOG_LEVEL_DEBUG
+        ARDUHAL_LOG_LEVEL=${LOG_LEVEL}
+        CORE_DEBUG_LEVEL=${LOG_LEVEL}
         CONFIG_NIMBLE_CPP_LOG_LEVEL=0
 )
 

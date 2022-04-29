@@ -1,59 +1,53 @@
 /**
- * A BLE client example to receive events from an Enocean PTM215b switch
+ * A BLE client example to receive events from an EnOcean PTM215b switch
  *
  *
  * author Jeroen
  */
-
-#include "enocean_PTM215b.h"
+#include "EnOceanBLEScanner.h"
 
 #define BLE_ADDRESS "e2:15:00:01:6b:89"
 #define SECURITY_KEY "C18D85427E74FB9A7CF46C29A760E8C5"
 
-class EH : public PTM215b::Eventhandler {
+class Handler : public EnOcean::PTM215EventHandler {
 public:
-    EH() {};
-    virtual ~EH() {};
+    Handler(const uint8_t id) : EnOcean::PTM215EventHandler(id) {};
+    virtual ~Handler() {};
 
-    void handleEvent(PTM215b::SwitchEvent& evt) override {
-
-        std::string type;
-        switch (evt.eventType) {
-            case PTM215b::EventType::Pushed:
-                type = "Pushed";
-                break;
-            case PTM215b::EventType::Repeat:
-                type = "Repeat";
-                break;
-            case PTM215b::EventType::ReleaseLong:
-                type = "ReleasedLong";
-                break;
-            case PTM215b::EventType::ReleaseShort:
-                type = "ReleasedShort";
-                break;
-            default:
-                break;
-        }
-
-        std::string direction = (evt.button == PTM215b::Button::A_UP || evt.button == PTM215b::Button::B_UP) ? "Up" : "Down";
-
-        log_d("BleSwitchEvent Received: Node Id: %d, Type: %s, Direction: %s", evt.nodeId, type.c_str(), direction.c_str());
-    };
+    void handleEvent(EnOcean::PTM215Event& event) override {
+        log_i("Handling Event by node %d", getId());
+        log_i("DeviceAddress: %s", event.device->address.toString().c_str());
+        log_i("Event: button %d type %d", event.button, event.eventType);
+    }
 
 };
 
-EH handler;
-PTM215b::Enocean_PTM215b enocean_PTM215b(handler, true);
+EnOcean::BLEScanner* scanner;
+Handler* handler1;
+Handler* handler2;
 
-void setup(){
+void setup() {
     Serial.begin(115200);
+    log_i("Starting EnOcean BLE Example application...");
 
-    BLEDevice::init("ESP32_client");
-    enocean_PTM215b.initialize();
+    scanner = new EnOcean::BLEScanner();
+    handler1 = new Handler(1);
+    handler2 = new Handler(2);
 
-    enocean_PTM215b.registerBleSwitch(BLE_ADDRESS, SECURITY_KEY, 0, 1, 2 , 3);
+    NimBLEDevice::init("ESP32_client");
+
+    scanner->initialize();
+
+    log_d("Adding devices");
+    // register handler for A0 and B0 buttons using pointer to handler
+    scanner->registerPTM215Device(BLE_ADDRESS, SECURITY_KEY, handler1, true, false, true, false);
+    // register handler for A1, B0 and B1 buttons, using nodeId of handler
+    scanner->registerPTM215Device(BLE_ADDRESS, SECURITY_KEY, 2, false, true, true, true);
+    log_i("Initialization done");
+    log_i("===========================================");
 }
 
-void loop(){
+void loop() {
+    // Nothing to do here
     delay(1000);
 }
