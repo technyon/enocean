@@ -38,7 +38,6 @@ target_compile_definitions(${PROJECT_NAME}
 
 #target_link_esp32_sdk(${PROJECT_NAME})
 
-# Arduino.h is included in hello_world.cpp, so link with Arduino core
 target_link_arduino_libraries(${PROJECT_NAME}
     PRIVATE
         core
